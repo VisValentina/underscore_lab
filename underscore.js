@@ -67,19 +67,21 @@ var _. = {
 				};
 		}
 	},
-	// I am struggling with this one. 
-	// I don't understand how to keep track of both arrays at the same time.
-	// I tried a nested for - loop before, but I didn't understand who was looping who and how I could capture those values.
+	// Still need to account for the missing num within array2 -- add another nested loop??
 	difference: function(arr1, arr2) {
-		var biggerArray;
-		var smallerArray;
-		var differentArray = [];
-		for(var i = 0; i < biggerArray.length; i++){
-			if(smallerArray.indexOf(biggerArray[i]) === -1 || smallerArray.indexOf(biggerArray[i]) === undefined)
-			//but how can I target the smallerArray[i] if it's not in a for loop as well??
-				differentArray.push(biggerArray[i]);
+		var diff = [];
+			for (i = 0 ; i < array1.length ; i++) {
+				var sameNum = false;
+				for (j = 0 ; j < array2.length ; j++) {
+					if ((array1[i]) === array2[j]) {
+						sameNum = true;
+					}
+				}
+				if (sameNum === false) {
+					diff.push(array1[i]);
+				}
 			}
-		return differentArray;
+			return diff;
 	},
 	indexOf: function(arr, lookingForNum) {
 		for(var i = 0; i < arr.length; i++) {
@@ -89,14 +91,44 @@ var _. = {
 		}
 		return -1;
 	},
-	//The problem with this one is that it gives me ALL the prop values - not only the one I specify via propName...
 	pluck: function(arrOfObj, propName) {
 		var newArr = [];
 		for(var i = 0; i < arrOfObj.length; i++) {
-			for(var propName in arrOfObj[i]) {
 				newArr.push(arrOfObj[i][propName]);
+			}
+		return newArr;
+	},
+	each: function(arr, callback) {
+		for(var i = 0; i < arr.length; i++) {
+			callback(arr[i]);
+		}
+	},
+	compact: function(arr) {
+		var newArr = [];
+		for(var i = 0; i < arr.length; i++) {
+			if(arr[i] !== undefined) {
+				newArr.push(arr[i]);
+			}
+		}
+		return (newArr);
+	},
+	map: function(array, callback) {
+		var mapped = [];
+  	for (var i = 0; i < array.length; i++) {
+    	mapped.push(callback(array[i]));
+  	}
+  	return mapped;
+	},
+	filter: function(array, callback) {
+		var newArr = [];
+		for(var i = 0; i < array.length; i++) {
+			if(callback(array[i])) {
+				newArr.push(array[i]);
 			}
 		}
 		return newArr;
 	}
 }
+
+
+
